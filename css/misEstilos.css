@@ -1,0 +1,10 @@
+img{
+    width: 100%;
+    height: 500px;
+}
+
+img:hover{
+    transform: translateY(-5px);
+    transition: 0.3s;
+}
+
