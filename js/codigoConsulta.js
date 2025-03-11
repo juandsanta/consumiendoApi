@@ -18,6 +18,7 @@ fetch(direccion, opciones)
         return respuesta.json();
     })
     .then(personaje => {
+        console.log(personaje.transformations);
         // //otra forma de ver la longitud del arreglo
         // let array = Array.from(personaje.transformations);
         // let longitud = array.length;
@@ -37,7 +38,7 @@ fetch(direccion, opciones)
 
                     const imageCarta = document.createElement('img');
                     imageCarta.classList.add('card-img-top');
-                    imageCarta.src = "./img/azul.jpg";
+                    imageCarta.src = transformacion.image;
 
                     const bodyCarta = document.createElement('div');
                     bodyCarta.classList.add('card-body');

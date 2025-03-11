@@ -1,7 +1,7 @@
 const contenedorCartas = document.querySelector('.contenedor-cartas');
 
 let pagina = 1;
-let numItems = 5;
+let numItems = 58;
 
 // Definimos la URL con los parámetros incluidos
 
@@ -40,7 +40,7 @@ fetch(urldragon, opciones)
 
                 const imageCarta = document.createElement('img');
                 imageCarta.classList.add('card-img-top');
-                imageCarta.src = "./img/imagenVerde.jpg";
+                imageCarta.src = personaje.image;
 
                 const bodyCarta = document.createElement('div');
                 bodyCarta.classList.add('card-body');
@@ -53,8 +53,8 @@ fetch(urldragon, opciones)
                 const parrafo2 = document.createElement('p');
                 const parrafo3 = document.createElement('p');
                 parrafo1.textContent = `${personaje.race} - ${personaje.gender}`
-                parrafo2.textContent = `Base KI ${personaje.ki}`;
-                parrafo3.textContent = `Max KI ${personaje.maxKi}`;
+                parrafo2.textContent = `Base KI: ${personaje.ki}`;
+                parrafo3.textContent = `Max KI: ${personaje.maxKi}`;
 
                 parrafo1.classList.add('card-text');
                 parrafo2.classList.add('card-text');
