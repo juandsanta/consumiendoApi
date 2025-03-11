@@ -1,17 +1,4 @@
 const contenedorCartas = document.querySelector('.contenedor-cartas');
-contenedorCartas.style.display = 'block';
-
-const contenedorConsulta = document.querySelector('.contenedor-consulta');
-contenedorConsulta.style.display = 'none';
-
-const btnAtras = document.getElementById('btn-atras');
-btnAtras.addEventListener('click', () => {
-    const contenedorCartas = document.querySelector('.contenedor-cartas');
-    contenedorCartas.style.display = 'block';
-
-    const contenedorConsulta = document.querySelector('.contenedor-consulta');
-    contenedorConsulta.style.display = 'none';
-});
 
 let pagina = 1;
 let numItems = 5;
@@ -49,8 +36,7 @@ fetch(urldragon, opciones)
                 columna.classList.add('col-12', 'col-sm-6', 'col-md-4', 'col-lg-3', 'mb-3');
 
                 const carta = document.createElement('div');
-                carta.classList.add('card', 'carta');
-                carta.setAttribute('id', personaje.id);
+                carta.classList.add('card');
 
                 const imageCarta = document.createElement('img');
                 imageCarta.classList.add('card-img-top');
@@ -74,11 +60,17 @@ fetch(urldragon, opciones)
                 parrafo2.classList.add('card-text');
                 parrafo3.classList.add('card-text');
 
+                const linkCarta = document.createElement('a');
+                linkCarta.setAttribute('id', personaje.id);
+                linkCarta.textContent = "Ver transformaciones"
+                linkCarta.href = "consultaPersona.html";
+                linkCarta.classList.add('carta', 'btn', 'btn-primary');
+                
                 bodyCarta.appendChild(title);
                 bodyCarta.appendChild(parrafo1);
                 bodyCarta.appendChild(parrafo2);
                 bodyCarta.appendChild(parrafo3);
-
+                bodyCarta.appendChild(linkCarta);
 
                 carta.appendChild(imageCarta);
                 carta.appendChild(bodyCarta);
@@ -93,77 +85,75 @@ fetch(urldragon, opciones)
         arrayCartas.forEach((carta) => {
             carta.addEventListener('click', () => {
                 console.log(carta.id);
+                let numId = carta.id;
+                localStorage.setItem('numeroId', numId);
                 let idPersonaje = carta.id;
-                const direccion = `https://dragonball-api.com/api/characters/${idPersonaje}`;
+                // const direccion = `https://dragonball-api.com/api/characters/${idPersonaje}`;
 
-                const opciones = {
-                    method: 'GET',
-                    headers: {
-                        'accept': '*/*'
-                    }
-                };
+                // const opciones = {
+                //     method: 'GET',
+                //     headers: {
+                //         'accept': '*/*'
+                //     }
+                // };
 
-                fetch(direccion, opciones)
-                    .then(respuesta => {
-                        if (!respuesta.ok) {
-                            throw new Error(`Error HTTP: ${respuesta.status}`);
-                        }
-                        return respuesta.json();
-                    })
-                    .then(personaje => {
-                        const contenedorCartas = document.querySelector('.contenedor-cartas');
-                        contenedorCartas.style.display = 'none';
+                // fetch(direccion, opciones)
+                //     .then(respuesta => {
+                //         if (!respuesta.ok) {
+                //             throw new Error(`Error HTTP: ${respuesta.status}`);
+                //         }
+                //         return respuesta.json();
+                //     })
+                //     .then(personaje => {
 
-                        const contenedorConsulta = document.querySelector('.contenedor-consulta');
-                        contenedorConsulta.style.display = 'block';
-                        //verificar que el personaje si tenga transformaciones
-                        if (personaje.transformations.length != 0) {
+                //         //verificar que el personaje si tenga transformaciones
+                //         if (personaje.transformations.length != 0) {
 
-                            //verificar si es un arreglo de objetos
-                            if (Array.isArray(personaje.transformations)){
-                                personaje.transformations.forEach(transformacion => {
-                                    const rowConsulta = document.getElementById('rowConsulta');
-                                    const columna = document.createElement('col');
-                                    columna.classList.add('col-12', 'col-sm-6', 'col-md-4', 'col-lg-3', 'mb-3');
+                //             //verificar si es un arreglo de objetos
+                //             if (Array.isArray(personaje.transformations)){
+                //                 personaje.transformations.forEach(transformacion => {
+                //                     const rowConsulta = document.getElementById('rowConsulta');
+                //                     const columna = document.createElement('col');
+                //                     columna.classList.add('col-12', 'col-sm-6', 'col-md-4', 'col-lg-3', 'mb-3');
 
-                                    const carta = document.createElement('div');
-                                    carta.classList.add('card');
+                //                     const carta = document.createElement('div');
+                //                     carta.classList.add('card');
 
-                                    const imageCarta = document.createElement('img');
-                                    imageCarta.classList.add('card-img-top');
-                                    imageCarta.src = "./img/azul.jpg";
+                //                     const imageCarta = document.createElement('img');
+                //                     imageCarta.classList.add('card-img-top');
+                //                     imageCarta.src = "./img/azul.jpg";
 
-                                    const bodyCarta = document.createElement('div');
-                                    bodyCarta.classList.add('card-body');
+                //                     const bodyCarta = document.createElement('div');
+                //                     bodyCarta.classList.add('card-body');
 
-                                    const title = document.createElement('h5');
-                                    title.classList.add('card-title');
-                                    title.textContent = transformacion.name;
-                                    bodyCarta.appendChild(title);
+                //                     const title = document.createElement('h5');
+                //                     title.classList.add('card-title');
+                //                     title.textContent = transformacion.name;
+                //                     bodyCarta.appendChild(title);
 
-                                    carta.appendChild(imageCarta);
-                                    carta.appendChild(bodyCarta);
-                                    columna.appendChild(carta);
-                                    rowConsulta.appendChild(columna);
-                                });
-                            } else {
-                                console.log("No es un arreglo de objetos");
-                            };
-                        } else {
-                            console.log('Este personaje no tiene transformaciones');
-                            const rowConsulta = document.getElementById('rowConsulta');
+                //                     carta.appendChild(imageCarta);
+                //                     carta.appendChild(bodyCarta);
+                //                     columna.appendChild(carta);
+                //                     rowConsulta.appendChild(columna);
+                //                 });
+                //             } else {
+                //                 console.log("No es un arreglo de objetos");
+                //             };
+                //         } else {
+                //             console.log('Este personaje no tiene transformaciones');
+                //             const rowConsulta = document.getElementById('rowConsulta');
                             
-                            const crearParrafo = document.createElement('p');
-                            crearParrafo.textContent = 'Este personaje no tiene transformaciones'
-                            rowConsulta.appendChild(crearParrafo);
-                        };
-                    })
-                    .catch(error => {
-                        console.error('Error al obtener los personajes:', error.message);
-                    })
-                    .finally(() => {
-                        console.log("Peticion de un personaje finalizada")
-                    });
+                //             const crearParrafo = document.createElement('p');
+                //             crearParrafo.textContent = 'Este personaje no tiene transformaciones'
+                //             rowConsulta.appendChild(crearParrafo);
+                //         };
+                //     })
+                //     .catch(error => {
+                //         console.error('Error al obtener los personajes:', error.message);
+                //     })
+                //     .finally(() => {
+                //         console.log("Peticion de un personaje finalizada")
+                //     });
             });
         })
     })
